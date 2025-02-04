@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Structures Visualizer</h1>
+        </header>
+        
+        <div class="editor-container">
+            <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
+        </div>
+        
+        <button id="submitBtn"><i class="fas fa-play"></i> Run Code</button>
+        
+        <div class="output-container">
+            <h2>Visualization Output:</h2>
+            <div id="visualizationOutput">No output yet</div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", async () => {
+            const code = document.getElementById("codeEditor").value;
+            const response = await fetch("/api/process-code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code })
+            });
+            const data = await response.json();
+            document.getElementById("visualizationOutput").innerText = JSON.stringify(data.visualization, null, 2);
+        });
+    </script>
+</body>
+</html>
+
+
+
